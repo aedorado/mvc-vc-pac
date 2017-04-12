@@ -4,37 +4,37 @@
  * and open the template in the editor.
  */
 package model;
+import java.io.Serializable;
 
 /**
  *
- * @author dorado
+ * @author dorado and algoprentice
  */
-public class FollowersBean {
-    
-    String followerId;
-    String followingId;
+public class FollowersBean implements Serializable {
+    private long followerId;
+    private long followingId;
 
     public FollowersBean() {
     }
 
-    public FollowersBean(String followerId, String followingId) {
+    public FollowersBean(long followerId, long followingId) {
         this.followerId = followerId;
         this.followingId = followingId;
     }
 
-    public String getFollowerId() {
+    public long getFollowerId() {
         return followerId;
     }
 
-    public void setFollowerId(String followerId) {
-        this.followerId = followerId;
-    }
-
-    public String getFollowingId() {
+    public long getFollowingId() {
         return followingId;
     }
 
-    public void setFollowingId(String followingId) {
+    public void setFollowerId(long followerId) {
+        this.followerId = followerId;
+    }
+
+    public void setFollowingId(long followingId) {
         this.followingId = followingId;
     }
     

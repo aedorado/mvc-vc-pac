@@ -11,14 +11,15 @@
 
 package model;
 
-public class UserBean {
+import java.io.Serializable;
+public class UserBean implements Serializable {
     
-    long id;
-    String username;
-    String password;
-    String email;
-    String name;
-    String gender;
+    private long id;
+    private String username;
+    private String password;
+    private String email;
+    private String name;
+    private String gender;
     
     public UserBean() {}
 

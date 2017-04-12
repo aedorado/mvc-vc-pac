@@ -32,7 +32,7 @@ CREATE TABLE `Comments` (
   `comment_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `comment` int(11) NOT NULL,
+  `comment` text NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=hp8;
 

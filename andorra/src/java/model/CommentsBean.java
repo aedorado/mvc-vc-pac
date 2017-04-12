@@ -4,27 +4,30 @@
  * and open the template in the editor.
  */
 package model;
+
 /**
  *
- * @author dorado and algoprentice
+ * @author swapnil
  */
 import java.io.Serializable;
-
-public class ImageBean implements Serializable {
+public class CommentsBean implements Serializable {
     private long userId;
     private long imageId;
-    private String caption;
+    private long commentId;
+    private String comment;
     private String time;
-    
-    public ImageBean() {
+
+    public CommentsBean() {
     }
 
-    public ImageBean(long userId, long imageId, String caption, String time) {
+    public CommentsBean(long userId, long imageId, long commentId, String comment, String time) {
         this.userId = userId;
         this.imageId = imageId;
-        this.caption = caption;
+        this.commentId = commentId;
+        this.comment = comment;
         this.time = time;
     }
+    
     
     public long getUserId() {
         return userId;
@@ -34,8 +37,12 @@ public class ImageBean implements Serializable {
         return imageId;
     }
 
-    public String getCaption() {
-        return caption;
+    public long getCommentId() {
+        return commentId;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public String getTime() {
@@ -50,11 +57,16 @@ public class ImageBean implements Serializable {
         this.imageId = imageId;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public void setCommentId(long commentId) {
+        this.commentId = commentId;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
+    
 }
