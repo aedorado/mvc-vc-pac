@@ -9,18 +9,19 @@ package model;
  *
  * @author swapnil
  */
+import java.sql.Timestamp;
 import java.io.Serializable;
 public class CommentsBean implements Serializable {
     private long userId;
     private long imageId;
     private long commentId;
     private String comment;
-    private String time;
+    private Timestamp time;
 
     public CommentsBean() {
     }
 
-    public CommentsBean(long userId, long imageId, long commentId, String comment, String time) {
+    public CommentsBean(long userId, long imageId, long commentId, String comment, Timestamp time) {
         this.userId = userId;
         this.imageId = imageId;
         this.commentId = commentId;
@@ -45,7 +46,7 @@ public class CommentsBean implements Serializable {
         return comment;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
@@ -65,7 +66,7 @@ public class CommentsBean implements Serializable {
         this.comment = comment;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
     

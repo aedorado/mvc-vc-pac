@@ -14,7 +14,7 @@ package model;
 import java.io.Serializable;
 public class UserBean implements Serializable {
     
-    private long id;
+    private long userId;
     private String username;
     private String password;
     private String email;
@@ -22,9 +22,9 @@ public class UserBean implements Serializable {
     private String gender;
     
     public UserBean() {}
-
-    public UserBean(long id, String username, String password, String email, String name, String gender) {
-        this.id = id;
+    
+    public UserBean(long userId, String username, String password, String email, String name, String gender) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -32,52 +32,51 @@ public class UserBean implements Serializable {
         this.gender = gender;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public long getUserId() {
+        return userId;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getGender() {
         return gender;
     }
 
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
 }

@@ -9,17 +9,18 @@ package model;
  * @author dorado and algoprentice
  */
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class ImageBean implements Serializable {
     private long userId;
     private long imageId;
     private String caption;
-    private String time;
+    private Timestamp time;
     
     public ImageBean() {
     }
 
-    public ImageBean(long userId, long imageId, String caption, String time) {
+    public ImageBean(long userId, long imageId, String caption, Timestamp time) {
         this.userId = userId;
         this.imageId = imageId;
         this.caption = caption;
@@ -38,7 +39,7 @@ public class ImageBean implements Serializable {
         return caption;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
@@ -53,8 +54,8 @@ public class ImageBean implements Serializable {
     public void setCaption(String caption) {
         this.caption = caption;
     }
-
-    public void setTime(String time) {
+    
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 }
