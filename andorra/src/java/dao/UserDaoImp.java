@@ -1,0 +1,115 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+/**
+ *
+ * @author algoprentice
+ */
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.mysql.jdbc.PreparedStatement;
+import java.util.List;
+import model.*;
+import java.util.ArrayList;
+
+public class UserDaoImp implements UserDao {
+
+    @Override
+    public boolean addUser(UserBean u) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "insert into User value(?,?,?,?,?,?)";
+	PreparedStatement ps;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setLong(1, u.getUserId());
+            ps.setString(2, u.getUsername());
+            ps.setString(3, u.getName());
+            ps.setString(4, u.getEmail());
+            ps.setString(5, u.getPassword());
+            ps.setString(6, u.getGender());          
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } 
+        return true;
+    }
+
+    @Override
+    public boolean checkUser(String username, String password) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select * from User where username='" + username
+				+ "' and password='" + password + "'";
+	PreparedStatement ps;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+		con.close();
+            } else {
+                con.close();
+                return false;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int totalImagesPosted(long userId) {
+        int count = 0;
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select count(*) from Image where user_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) count = rs.getInt(1);
+            con.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return count;
+    }
+
+    @Override
+    public List listImagesPosted(long userId) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select image_id from Image where user_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        List<Integer > list;
+        list = new ArrayList<Integer >();
+        
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                list.add(rs.getInt(1));
+            }
+            con.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        UserDaoImp obj = new UserDaoImp();
+        //UserBean u = new UserBean(1, "username", "password", "email", "name", "gender");
+        List<Integer > result = obj.listImagesPosted(0);
+        System.out.println(result);
+    }
+    
+}
