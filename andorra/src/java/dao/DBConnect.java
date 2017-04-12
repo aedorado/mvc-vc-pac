@@ -19,7 +19,7 @@ public class DBConnect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			cons = DriverManager.getConnection(
-					"jdbc:mysql://localhost/instagram", "root", "007");
+					"jdbc:mysql://localhost/andorra", "root", "root");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

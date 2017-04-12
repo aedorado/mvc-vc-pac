@@ -7,7 +7,7 @@ package dao;
 
 /**
  *
- * @author algoprentice
+ * @author dorado
  */
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,16 +22,15 @@ public class UserDaoImp implements UserDao {
     @Override
     public boolean addUser(UserBean u) {
         Connection con = DBConnect.getConnecttion();
-        String sql = "insert into User value(?,?,?,?,?,?)";
+        String sql = "insert into User value(?,?,?,?,?)";
 	PreparedStatement ps;
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setLong(1, u.getUserId());
             ps.setString(2, u.getUsername());
-            ps.setString(3, u.getName());
-            ps.setString(4, u.getEmail());
-            ps.setString(5, u.getPassword());
-            ps.setString(6, u.getGender());          
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getPassword());
+            ps.setString(5, u.getGender());          
             ps.executeUpdate();
             con.close();
         } catch (SQLException e) {
@@ -42,10 +41,9 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public boolean checkUser(String username, String password) {
+    public boolean checkUser(String username) {
         Connection con = DBConnect.getConnecttion();
-        String sql = "select * from User where username='" + username
-				+ "' and password='" + password + "'";
+        String sql = "SELECT * FROM User where username='" + username + "'";
 	PreparedStatement ps;
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
@@ -103,6 +101,25 @@ public class UserDaoImp implements UserDao {
         }
         
         return list;
+    }
+    
+    @Override
+    public boolean login(String username, String password) {
+            Connection con = DBConnect.getConnecttion();
+            String sql = "select * from user where username='" + username
+                            + "' and password='" + password + "'";
+            PreparedStatement ps;
+            try {
+                    ps = (PreparedStatement) con.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                            con.close();
+                            return true;
+                    }
+            } catch (SQLException e) {
+                    e.printStackTrace();
+            }
+            return false;
     }
     
     public static void main(String[] args) {
