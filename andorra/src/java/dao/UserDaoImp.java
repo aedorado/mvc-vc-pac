@@ -85,7 +85,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public List listImagesPosted(long userId) {
         Connection con = DBConnect.getConnecttion();
-        String sql = "select image_id from Image where user_id=" + userId + "";
+        String sql = "select image_id from Image where user_id=" + userId + " ORDER BY time DESC";
         PreparedStatement ps;
         ResultSet rs;
         List<Integer> list;

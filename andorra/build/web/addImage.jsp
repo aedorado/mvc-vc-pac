@@ -3,10 +3,22 @@
     Created on : 13 Apr, 2017, 12:24:35 PM
     Author     : dorado
 --%>
+<%@include file="header.jsp" %>
 <%
-    if (session.getAttribute("username") == null) {
-        response.sendRedirect("login.jsp"); 
+    
+    redirectIfSessionUnset(response, session);
+    
+    String err = "";
+    if (request.getAttribute("err") != null) {
+            err = (String) request.getAttribute("err");
     }
+    
+    String suc = "";
+    if (request.getAttribute("suc") != null) {
+            suc = (String) request.getAttribute("suc");
+    }
+    out.print(suc);
+    
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

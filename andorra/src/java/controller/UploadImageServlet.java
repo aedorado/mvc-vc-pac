@@ -113,8 +113,8 @@ public class UploadImageServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            suc += ("New file " + fileName + " created at ");
             imageDao.addImage(new ImageBean((long) session.getAttribute("user_id"), 0, request.getParameter("caption"), null));
+            suc += ("File uploaded succesfully");
             response.sendRedirect("addImage.jsp");
         } catch (FileNotFoundException fne) {
             err += ("You either did not specify a file to upload or are "
