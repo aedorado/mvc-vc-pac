@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -91,7 +92,8 @@ public class UploadImageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        String err = "";
+        String suc = "";
         HttpSession session = request.getSession();
 
         // Create path components to save the file
@@ -111,15 +113,17 @@ public class UploadImageServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            writer.println("New file " + fileName + " created at ");
-            
+            suc += ("New file " + fileName + " created at ");
             imageDao.addImage(new ImageBean((long) session.getAttribute("user_id"), 0, request.getParameter("caption"), null));
-            
+            response.sendRedirect("addImage.jsp");
         } catch (FileNotFoundException fne) {
-            writer.println("You either did not specify a file to upload or are "
-                    + "trying to upload a file to a protected or nonexistent "
-                    + "location.");
-            writer.println("<br/> ERROR: " + fne.getMessage());
+            err += ("You either did not specify a file to upload or are "
+                    + "trying to upload a file to a protected or nonexistent location.");
+            String url = "/addImage.jsp";
+            RequestDispatcher rd = getServletContext()
+                        .getRequestDispatcher(url);
+            rd.forward(request, response);
+//            writer.println("<br/> ERROR: " + fne.getMessage());
 //            fne.printStackTrace(writer);
         } finally {
             if (out != null) {

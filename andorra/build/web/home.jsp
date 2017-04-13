@@ -3,6 +3,8 @@
     Created on : 13 Apr, 2017, 12:03:16 PM
     Author     : dorado
 --%>
+<%@include file="header.jsp" %>
+<% redirectIfSessionUnset(response, session); %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

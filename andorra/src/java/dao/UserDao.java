@@ -11,23 +11,33 @@ package dao;
  */
 import java.util.List;
 import model.UserBean;
-public interface UserDao {    
+
+public interface UserDao {
+
     //1 if user added successfuly else 0.
     public boolean addUser(UserBean u);
+
     //1 if username exists else 0.
     public boolean exists(String username);
+
     //No. of images posted by the userId.
     public int totalImagesPosted(long userId);
+
     //List of images posted by the user/
     public List listImagesPosted(long userId);
+
     // login user
     public boolean login(String username, String password);
-    
+
     public long getIdFromUsername(String username);
+
     //Number of followers of user.
     public int totalFollowers(long userId);
+
     public List listFollowersOf(long userId);
-//Number of users, user is following.
+    //Number of users, user is following.
+
     public int totalFollowing(long userId);
+
     public List listFollowingOf(long userId);
 }

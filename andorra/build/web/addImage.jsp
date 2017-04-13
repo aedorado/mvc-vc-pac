@@ -5,7 +5,6 @@
 --%>
 <%
     if (session.getAttribute("username") == null) {
-//        out.println("hello");
         response.sendRedirect("login.jsp"); 
     }
 %>
@@ -19,7 +18,7 @@
     <body>
         <h1>Hello World!</h1>
         <form name="upload-image" action="UploadImageServlet" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".png,.jpg,.jpeg">
+            <input type="file" name="file" accept=".jpg">
             <input type="text" name="caption" placeholder="caption">
             <input type="submit">
         </form>

@@ -10,11 +10,8 @@ package dao;
  * @author swapnil
  */
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
 import model.*;
 
 public class FollowersDaoImp implements FollowersDao {

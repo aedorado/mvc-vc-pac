@@ -9,7 +9,6 @@ package dao;
  *
  * @author swapnil
  */
-import java.util.List;
 import model.FollowersBean;
 public interface FollowersDao {
     public boolean addFollower(FollowersBean F);

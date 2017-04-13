@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dao;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import com.mysql.jdbc.PreparedStatement;
 import java.util.List;
 import model.*;
 import java.util.ArrayList;
+
 /**
  *
  * @author swapnil
@@ -22,7 +24,7 @@ public class ImageDaoImp implements ImageDao {
     public boolean addImage(ImageBean u) {
         Connection con = DBConnect.getConnecttion();
         String sql = "insert into Image value(?,?,?,?)";
-	PreparedStatement ps;
+        PreparedStatement ps;
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setLong(1, u.getImageId());
@@ -34,14 +36,14 @@ public class ImageDaoImp implements ImageDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } 
+        }
         return true;
     }
-    
+
     public static void main(String[] args) {
         ImageDaoImp ob = new ImageDaoImp();
         ImageBean I = new ImageBean(1, 5, "caption dasd da ", null);
-        boolean res= ob.addImage(I);
+        boolean res = ob.addImage(I);
         System.out.println(res);
     }
 
@@ -65,4 +67,31 @@ public class ImageDaoImp implements ImageDao {
         }
         return count;
     }
+
+    @Override
+    public ImageBean getImageByID(long imageId) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select * from Image WHERE image_id = '" + imageId + "'";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ImageBean img = new ImageBean();
+                img.setImageId(rs.getLong("image_id"));
+                img.setUserId(rs.getLong("user_id"));
+                img.setCaption(rs.getString("caption"));
+                img.setTime(rs.getTimestamp("timestamp"));
+                con.close();
+                return img;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
 }
