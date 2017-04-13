@@ -6,9 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<jsp:useBean id="user" scope="session" class="model.UserBean" />
-<jsp:setProperty name="user" property="username" value="Anurag" />
-
+<%--<jsp:useBean id="user" scope="session" class="model.UserBean" />--%>
+<%--<jsp:setProperty name="user" property="username" value="Anurag" />--%>
+<%--<jsp:getProperty name="user" property="username" />--%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +16,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello <jsp:getProperty name="user" property="username" />!</h1>
-        <a href="register.jsp">Register</a>
+        <h1>Hello <% out.println(session.getAttribute("username")); %>!</h1>
     </body>
 </html>

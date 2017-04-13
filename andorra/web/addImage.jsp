@@ -1,6 +1,6 @@
 <%-- 
-    Document   : LoginController.jsp
-    Created on : 13 Apr, 2017, 11:51:39 AM
+    Document   : addImage
+    Created on : 13 Apr, 2017, 12:24:35 PM
     Author     : dorado
 --%>
 
@@ -13,5 +13,9 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <form name="upload-image" action="UploadImageServlet" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".png,.jpg,.jpeg">
+            <input type="submit">
+        </form>
     </body>
 </html>
