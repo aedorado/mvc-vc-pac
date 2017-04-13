@@ -4,6 +4,13 @@
     Author     : dorado
 --%>
 
+<%
+    if (session.getAttribute("username") == null) {
+//        out.println("hello");
+        response.sendRedirect("login.jsp"); 
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%--<jsp:useBean id="user" scope="session" class="model.UserBean" />--%>
@@ -13,7 +20,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Index Page</title>
     </head>
     <body>
         <h1>Hello <% out.println(session.getAttribute("username")); %>!</h1>

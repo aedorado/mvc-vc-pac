@@ -28,7 +28,6 @@
         <url-pattern>/UploadImageServlet</url-pattern>
     </servlet-mapping>
     
-    
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>
