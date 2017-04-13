@@ -4,6 +4,7 @@
     Author     : dorado
 --%>
 <%@include file="header.jsp" %>
+<%@include file="navbar.html" %>
 <%
     
     redirectIfSessionUnset(response, session);

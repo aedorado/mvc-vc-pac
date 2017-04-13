@@ -108,8 +108,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public List listImagesPostedByFollowing(long userId) {
         Connection con = DBConnect.getConnecttion();
-        Sy
-        String sql = "select image_id  from Image inner join Followers where user_id = following_id and follower_id=" + userId + "";
+        String sql = "select image_id  from Image inner join Followers where user_id = following_id and follower_id=" + userId + " ORDER BY time DESC";
         PreparedStatement ps;
         ResultSet rs;
         List<Integer> list;

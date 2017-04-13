@@ -25,7 +25,7 @@
         ImageBean img = idi.getImageByID(i);
         String placeholder = "";
         placeholder += "<div>";
-        placeholder += "<img src='uploads/" + i + ".jpg'>";
+        placeholder += "<img class='img-rounded img-thumbnail img-responsive' src='uploads/" + i + ".jpg'>";
         placeholder += "</div>";
         return placeholder;
     }
