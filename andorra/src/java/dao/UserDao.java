@@ -25,7 +25,7 @@ public interface UserDao {
 
     //List of images posted by the user/
     public List listImagesPosted(long userId);
-
+    public List listImagesPostedByFollowing(long userId);
     // login user
     public boolean login(String username, String password);
 

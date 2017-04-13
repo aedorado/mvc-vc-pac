@@ -81,11 +81,35 @@ public class UserDaoImp implements UserDao {
         }
         return count;
     }
-
+    
     @Override
     public List listImagesPosted(long userId) {
         Connection con = DBConnect.getConnecttion();
         String sql = "select image_id from Image where user_id=" + userId + "";
+        PreparedStatement ps;
+        ResultSet rs;
+        List<Integer> list;
+        list = new ArrayList<Integer>();
+
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
+    @Override
+    public List listImagesPostedByFollowing(long userId) {
+        Connection con = DBConnect.getConnecttion();
+        Sy
+        String sql = "select image_id  from Image inner join Followers where user_id = following_id and follower_id=" + userId + "";
         PreparedStatement ps;
         ResultSet rs;
         List<Integer> list;
@@ -128,7 +152,7 @@ public class UserDaoImp implements UserDao {
         UserDaoImp obj = new UserDaoImp();
         //UserBean u = new UserBean(1, "username", "password", "email", "name", "gender");
 //        List<Integer> result = obj.listImagesPosted(0);
-        System.out.println(obj.getIdFromUsername("swap"));
+        System.out.println(obj.listImagesPostedByFollowing(1));
     }
 
     @Override
