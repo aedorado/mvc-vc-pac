@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/swapnil/mvc-vs-pac/andorra/src/java/dao/UserDao.java</file>
-            <file>file:/home/swapnil/mvc-vs-pac/andorra/src/java/model/UserBean.java</file>
-            <file>file:/home/swapnil/mvc-vs-pac/andorra/src/java/dao/UserDaoImp.java</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/src/java/model/UserBean.java</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/web/register.jsp</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/src/java/controller/RegisterServlet.java</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/src/java/dao/UserDaoImp.java</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/src/java/dao/DBConnect.java</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/web/index.jsp</file>
+            <file>file:/home/dorado/work/mvc-vs-pac/andorra/src/java/dao/UserDao.java</file>
         </group>
     </open-files>
 </project-private>
