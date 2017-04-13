@@ -5,6 +5,8 @@
  */
 package controller;
 
+import dao.ImageDao;
+import dao.ImageDaoImp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +20,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import model.ImageBean;
 
 /**
  *
@@ -29,6 +33,8 @@ import javax.servlet.http.Part;
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class UploadImageServlet extends HttpServlet {
+    
+    ImageDao imageDao = new ImageDaoImp();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,39 +86,41 @@ public class UploadImageServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String SAVE_DIR = "uploadedFiles";
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
 
         // Create path components to save the file
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
-
+        final String newFileName = imageDao.countTotalImages() + 1 + "." + getFileExtension(fileName);
+        
         OutputStream out = null;
         InputStream filecontent = null;
         final PrintWriter writer = response.getWriter();
-
+        
         try {
-            out = new FileOutputStream(new File(request.getRealPath("/uploads/") + File.separator + fileName));
+            out = new FileOutputStream(new File(request.getRealPath("/uploads/") + File.separator + newFileName));
             filecontent = filePart.getInputStream();
-            if (true) {
-                int read = 0;
-                final byte[] bytes = new byte[1024];
-
-                while ((read = filecontent.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-                writer.println("New file " + fileName + " created at ");
+            int read = 0;
+            final byte[] bytes = new byte[1024];
+            while ((read = filecontent.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
             }
+            writer.println("New file " + fileName + " created at ");
+            
+            imageDao.addImage(new ImageBean((long) session.getAttribute("user_id"), 0, request.getParameter("caption"), null));
+            
         } catch (FileNotFoundException fne) {
             writer.println("You either did not specify a file to upload or are "
                     + "trying to upload a file to a protected or nonexistent "
                     + "location.");
             writer.println("<br/> ERROR: " + fne.getMessage());
-            fne.printStackTrace(writer);
-//            writer.println("<br/> ERROR: " + );
+//            fne.printStackTrace(writer);
         } finally {
             if (out != null) {
                 out.close();
@@ -137,6 +145,15 @@ public class UploadImageServlet extends HttpServlet {
             }
         }
         return null;
+    }
+    
+    private String getFileExtension(String fileName) {
+        String extension = "";
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i + 1);
+        }
+        return extension;
     }
 
     /**

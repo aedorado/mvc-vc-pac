@@ -13,4 +13,6 @@ import model.ImageBean;
 public interface ImageDao {
     //1 if added else 0.
     public boolean addImage(ImageBean I);
+    
+    public int countTotalImages();
 }

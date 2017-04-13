@@ -44,4 +44,25 @@ public class ImageDaoImp implements ImageDao {
         boolean res= ob.addImage(I);
         System.out.println(res);
     }
+
+    @Override
+    public int countTotalImages() {
+        int count = 0;
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select count(*) from Image";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return count;
+    }
 }
