@@ -149,5 +149,87 @@ public class UserDaoImp implements UserDao {
         }
         return 0;
     }
+    @Override
+    public int totalFollowers(long userId) {
+        int count = 0;
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select count(*) from Followers where following_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) count = rs.getInt(1);
+            con.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return count;
+    }
 
+    @Override
+    public int totalFollowing(long userId) {
+        int count = 0;
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select count(*) from Followers where follower_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) count = rs.getInt(1);
+            con.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return count;
+    }
+    
+    @Override
+    public List listFollowersOf(long userId) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select follower_id from Followers where following_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        List<Integer> list;
+        list = new ArrayList<Integer>();
+        
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+    
+    @Override
+    public List listFollowingOf(long userId) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select following_id from Followers where follower_id=" + userId + "";
+	PreparedStatement ps;
+        ResultSet rs;
+        List<Integer> list;
+        list = new ArrayList<Integer>();
+        
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
 }

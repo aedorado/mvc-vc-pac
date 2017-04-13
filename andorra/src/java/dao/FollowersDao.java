@@ -9,12 +9,11 @@ package dao;
  *
  * @author swapnil
  */
+import java.util.List;
 import model.FollowersBean;
 public interface FollowersDao {
     public boolean addFollower(FollowersBean F);
     public boolean deleteFollower(long followerId, long followingId);
-    //Number of followers of user.
-    public int totalFollowers(long userId);
-    //Number of users, user is following.
-    public int totalFollowing(long userId);
+    
+    
 }

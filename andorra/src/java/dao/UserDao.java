@@ -24,4 +24,10 @@ public interface UserDao {
     public boolean login(String username, String password);
     
     public long getIdFromUsername(String username);
+    //Number of followers of user.
+    public int totalFollowers(long userId);
+    public List listFollowersOf(long userId);
+//Number of users, user is following.
+    public int totalFollowing(long userId);
+    public List listFollowingOf(long userId);
 }

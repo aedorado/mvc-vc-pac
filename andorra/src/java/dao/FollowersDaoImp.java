@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 import model.*;
 
 public class FollowersDaoImp implements FollowersDao {
@@ -51,43 +53,7 @@ public class FollowersDaoImp implements FollowersDao {
         return true;
     }
 
-    @Override
-    public int totalFollowers(long userId) {
-        int count = 0;
-        Connection con = DBConnect.getConnecttion();
-        String sql = "select count(*) from Followers where following_id=" + userId + "";
-	PreparedStatement ps;
-        ResultSet rs;
-        try {
-            ps = (PreparedStatement) con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) count = rs.getInt(1);
-            con.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return count;
-    }
-
-    @Override
-    public int totalFollowing(long userId) {
-        int count = 0;
-        Connection con = DBConnect.getConnecttion();
-        String sql = "select count(*) from Followers where follower_id=" + userId + "";
-	PreparedStatement ps;
-        ResultSet rs;
-        try {
-            ps = (PreparedStatement) con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) count = rs.getInt(1);
-            con.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return count;
-    }
+    
     
     public static void main(String[] args) {
         FollowersDaoImp ob = new FollowersDaoImp();
@@ -98,11 +64,7 @@ public class FollowersDaoImp implements FollowersDao {
       // res = ob.deleteFollower(1, 2);
       //  System.out.println(res);
         
-        int s = ob.totalFollowers(1);
-        System.out.println(s);
-        
-        s = ob.totalFollowing(5);
-        System.out.println(s);
+     
 
     }
 }
