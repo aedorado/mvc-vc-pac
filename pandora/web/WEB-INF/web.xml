@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <session-config>
+        <session-timeout>
+            300
+        </session-timeout>
+    </session-config>
+    
+    <servlet>
+        <servlet-name>RegisterAgentControlServlet</servlet-name>
+        <servlet-class>registerAgent.RegisterAgentControlServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterAgentControlServlet</servlet-name>
+        <url-pattern>/RegisterAgentControlServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LoginAgentControlServlet</servlet-name>
+        <servlet-class>loginAgent.LoginAgentControlServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginAgentControlServlet</servlet-name>
+        <url-pattern>/LoginAgentControlServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UploadAgentControlServlet</servlet-name>
+        <servlet-class>uploadAgent.UploadAgentControlServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadAgentControlServlet</servlet-name>
+        <url-pattern>/UploadAgentControlServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>FollowServlet</servlet-name>
+        <servlet-class>independentControllers.FollowServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FollowServlet</servlet-name>
+        <url-pattern>/FollowServlet</url-pattern>
+    </servlet-mapping>
+    
+</web-app>

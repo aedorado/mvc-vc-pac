@@ -1,0 +1,64 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14 Apr, 2017, 12:27:43 AM
+    Author     : dorado
+*/
+
+.like-button {
+    height: 16px;
+}
+
+.unlike-button {
+    height: 16px;
+}
+
+.major-div {
+    width: 80%;
+    margin: 10px 10%;
+}
+
+.image-div {
+    width: 60%;
+    left: 20%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+.image-div:hover {
+    box-shadow: 0px 0px 10px #555555;
+}
+
+#user-details {
+    list-style-type: none;
+    width: 100%;
+    text-align: center;
+}
+
+#user-details li {
+    display: inline-block;
+    width: 150px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+
+}
+
+.interaction-div {
+
+}
+
+.follow-button {
+    position: relative;
+    top: 5px;
+    right: 10px;
+}
+
+/*.my-img {
+    width: 60%;
+    left: 10%;
+    position: relative;
+}*/
