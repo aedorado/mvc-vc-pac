@@ -1,14 +1,35 @@
 <%-- 
-    Document   : index
-    Created on : 11 Apr, 2017, 6:08:21 PM
+    Document   : home
+    Created on : 13 Apr, 2017, 12:03:16 PM
     Author     : dorado
 --%>
-
+<% 
+if (session.getAttribute("username") == null) {
+    response.sendRedirect("login.jsp");
+}  
+%>
+<%@include file="header.jsp" %>
+<%@include file="navbar.html" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="user" scope="session" class="model.UserBean" />
-<jsp:setProperty name="user" property="username" value="Anurag" />
-
+<%@page import="model.UserBean" %>
+<%@page import="model.ImageBean" %>
+<%@page import="dao.UserDaoImp" %>
+<%@page import="dao.ImageDaoImp" %>
+<%@page import="java.util.List" %>
+<%    
+long user_id = (Long) session.getAttribute("user_id");
+UserDaoImp udi = new UserDaoImp();
+List<Integer> imgIdList = udi.listImagesPostedByFollowing(user_id);
+%>
+<%!
+public String pageHTML(List<Integer> imgIdList, HttpSession session) {
+    String output = "";
+    for (Integer i: imgIdList) {
+        output += imageIdToHTML(i.intValue(), session);
+    }
+    return output;
+}
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +37,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello <jsp:getProperty name="user" property="username" />!</h1>
-        <a href="register.jsp">Register</a>
+        <div class="major-div">
+            <% out.println(pageHTML(imgIdList, session)); %> 
+        </div>
     </body>
 </html>

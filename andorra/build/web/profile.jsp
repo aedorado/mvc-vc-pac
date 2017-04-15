@@ -6,7 +6,9 @@
 <%@include file="header.jsp" %>
 <%@include file="navbar.html" %>
 <%
-    redirectIfSessionUnset(response, session);
+    if (session.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp");
+    }
 %>
 
 <%@page import="model.UserBean" %>
@@ -15,22 +17,21 @@
 <%@page import="dao.ImageDaoImp" %>
 <%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%  
-long user_id = Long.parseLong(request.getParameter("user_id"));
-UserDaoImp udi = new UserDaoImp();
-long totalImagesPosted = udi.totalImagesPosted(user_id);
-long totalFollowers = udi.totalFollowers(user_id);
-long totalFollowing = udi.totalFollowing(user_id);
-List<Integer> imgIdList = udi.listImagesPosted(user_id);
+<%
+    long user_id = Long.parseLong(request.getParameter("user_id"));
+    UserDaoImp udi = new UserDaoImp();
+    long totalImagesPosted = udi.totalImagesPosted(user_id);
+    long totalFollowers = udi.totalFollowers(user_id);
+    long totalFollowing = udi.totalFollowing(user_id);
+    List<Integer> imgIdList = udi.listImagesPosted(user_id);
 %>
-<%!
-public String pageHTML(List<Integer> imgIdList, HttpSession session) {
-    String output = "";
-    for (Integer i: imgIdList) {
-        output += imageIdToHTML(i.intValue(), session);
+<%!    public String pageHTML(List<Integer> imgIdList, HttpSession session) {
+        String output = "";
+        for (Integer i : imgIdList) {
+            output += imageIdToHTML(i.intValue(), session);
+        }
+        return output;
     }
-    return output;
-}
 %>
 
 <!DOCTYPE html>
@@ -46,6 +47,8 @@ public String pageHTML(List<Integer> imgIdList, HttpSession session) {
             <li><% out.println(totalFollowing); %> Following</li>
         </ul>
         <br>
-        <% out.println(pageHTML(imgIdList, session)); %>
+        <div class="major-div">
+            <% out.println(pageHTML(imgIdList, session));%>
+        </div>
     </body>
 </html>

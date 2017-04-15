@@ -3,8 +3,12 @@
     Created on : 13 Apr, 2017, 12:03:16 PM
     Author     : dorado
 --%>
+<% 
+if (session.getAttribute("username") == null) {
+    response.sendRedirect("login.jsp");
+}  
+%>
 <%@include file="header.jsp" %>
-<% redirectIfSessionUnset(response, session); %>
 <%@include file="navbar.html" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.UserBean" %>
@@ -12,7 +16,7 @@
 <%@page import="dao.UserDaoImp" %>
 <%@page import="dao.ImageDaoImp" %>
 <%@page import="java.util.List" %>
-<%  
+<%    
 long user_id = (Long) session.getAttribute("user_id");
 UserDaoImp udi = new UserDaoImp();
 List<Integer> imgIdList = udi.listImagesPostedByFollowing(user_id);

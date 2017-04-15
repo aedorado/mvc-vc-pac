@@ -4,9 +4,9 @@
     Author     : dorado
 --%>
 <%
-    if (session.getAttribute("username") == null) {
-        response.sendRedirect("login.jsp");
-    }
+if (session.getAttribute("username") == null) {
+    response.sendRedirect("login.jsp");
+}
 %>
 <%@include file="header.jsp" %>
 <%@include file="navbar.html" %>

@@ -13,21 +13,12 @@
 <%@page import="javax.servlet.http.HttpSession" %>
 
 <%!
-    public void redirectIfSessionUnset(HttpServletResponse response, HttpSession session) {
-        try {
-            if (session.getAttribute("username") == null) {
-                response.sendRedirect("login.jsp");
-            }
-        } catch (Exception e) {
-
-        }
-    }
 
     public String imageIdToHTML(long i, HttpSession session) {
         ImageDaoImp idi = new ImageDaoImp();
         ImageBean img = idi.getImageByID(i);
         UserDaoImp udi = new UserDaoImp();
-        UserBean uploader = udi.getUserByID(img.getUserId() );
+        UserBean uploader = udi.getUserByID(img.getUserId());
         String placeholder = "";
         placeholder += "<div class='image-div'>";
         placeholder += "<img class='img-rounded img-thumbnail img-responsive my-img' src='uploads/" + i + ".jpg'>";

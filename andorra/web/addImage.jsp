@@ -4,19 +4,9 @@
     Author     : dorado
 --%>
 <%
-    if (session.getAttribute("username") == null) {
-//        out.println("hello");
-        response.sendRedirect("login.jsp");
-    }
-    String err = "";
-    if (request.getAttribute("err") != null) {
-        err = (String) request.getAttribute("err");
-    }
-    String suc = "";
-    if (request.getAttribute("suc") != null) {
-        suc = (String) request.getAttribute("suc");
-        System.out.println("SUC : " + suc);
-    }
+if (session.getAttribute("username") == null) {
+    response.sendRedirect("login.jsp");
+}
 %>
 <%@include file="header.jsp" %>
 <%@include file="navbar.html" %>
@@ -28,8 +18,17 @@
         <title>Upload Images</title>
     </head>
     <body>
-        <%=suc%>
         <div class="col-md-8 col-md-offset-2">
+            <%
+                if (request.getAttribute("err") != null) {
+                        String err = (String) request.getAttribute("err");
+                        out.println("<div class='alert alert-danger'>" + err + "</div>");
+                }
+                if (request.getAttribute("suc") != null) {
+                        String suc = (String) request.getAttribute("suc");
+                        out.println("<div class='alert alert-success'>" + suc + "</div>");
+                }
+            %>
             <form name="upload-image" action="UploadImageServlet" method="POST" enctype="multipart/form-data">
                 <input type="text" name="caption" placeholder="caption" class='form-control'><br>
                 <input type="file" name="file" accept=".png,.jpg,.jpeg"><br>
