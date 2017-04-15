@@ -6,17 +6,14 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.PreparedStatement;
-import java.util.List;
 import model.*;
-import java.util.ArrayList;
 
 /**
  *
- * @author swapnil
+ * @author swapnil and dorado
  */
 public class ImageDaoImp implements ImageDao {
 
@@ -42,9 +39,9 @@ public class ImageDaoImp implements ImageDao {
 
     public static void main(String[] args) {
         ImageDaoImp ob = new ImageDaoImp();
-        ImageBean I = new ImageBean(1, 5, "caption dasd da ", null);
-        boolean res = ob.addImage(I);
-        System.out.println(res);
+        boolean res = ob.isLikedBy(1L, 2L);
+        ImageBean img = ob.getImageByID(4);
+        System.out.println(img.getCaption());
     }
 
     @Override
@@ -82,7 +79,7 @@ public class ImageDaoImp implements ImageDao {
                 img.setImageId(rs.getLong("image_id"));
                 img.setUserId(rs.getLong("user_id"));
                 img.setCaption(rs.getString("caption"));
-                img.setTime(rs.getTimestamp("timestamp"));
+                img.setTime(rs.getTimestamp("time"));
                 con.close();
                 return img;
             }
@@ -92,6 +89,30 @@ public class ImageDaoImp implements ImageDao {
             return null;
         }
         return null;
+    }
+
+    @Override
+    public boolean isLikedBy(long imageid, long userid) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "SELECT COUNT(*) FROM Likes WHERE user_id='" + userid + "' AND image_id = '" + imageid + "'";
+        PreparedStatement ps;
+        try {
+            int count = 0;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+                con.close();
+            }
+            if (count == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

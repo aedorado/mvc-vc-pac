@@ -13,6 +13,6 @@ import model.FollowersBean;
 public interface FollowersDao {
     public boolean addFollower(FollowersBean F);
     public boolean deleteFollower(long followerId, long followingId);
-    
+    public boolean isfollowing(long follower, long following);
     
 }

@@ -3,8 +3,8 @@
     Created on : 13 Apr, 2017, 12:03:16 PM
     Author     : dorado
 --%>
-<% redirectIfSessionUnset(response, session); %>
 <%@include file="header.jsp" %>
+<% redirectIfSessionUnset(response, session); %>
 <%@include file="navbar.html" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.UserBean" %>
@@ -18,10 +18,10 @@ UserDaoImp udi = new UserDaoImp();
 List<Integer> imgIdList = udi.listImagesPostedByFollowing(user_id);
 %>
 <%!
-public String pageHTML(List<Integer> imgIdList) {
+public String pageHTML(List<Integer> imgIdList, HttpSession session) {
     String output = "";
     for (Integer i: imgIdList) {
-        output += imageIdToHTML(i.intValue());
+        output += imageIdToHTML(i.intValue(), session);
     }
     return output;
 }
@@ -33,6 +33,8 @@ public String pageHTML(List<Integer> imgIdList) {
         <title>JSP Page</title>
     </head>
     <body>
-        <% out.println(pageHTML(imgIdList)); %> 
+        <div class="major-div">
+            <% out.println(pageHTML(imgIdList, session)); %> 
+        </div>
     </body>
 </html>

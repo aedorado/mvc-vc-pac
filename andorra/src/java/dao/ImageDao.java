@@ -19,5 +19,7 @@ public interface ImageDao {
     public int countTotalImages();
 
     public ImageBean getImageByID(long imageId);
+    
+    public boolean isLikedBy(long imageid, long userid);
 
 }

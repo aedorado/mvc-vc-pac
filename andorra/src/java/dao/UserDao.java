@@ -40,4 +40,8 @@ public interface UserDao {
     public int totalFollowing(long userId);
 
     public List listFollowingOf(long userId);
+    
+    public UserBean getUserByID(long imageId);
+    
+    public String getUsernameFromId(long user_id);
 }

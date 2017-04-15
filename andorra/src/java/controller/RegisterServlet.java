@@ -52,7 +52,8 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        String gender = request.getParameter("gender");
+        String gender = "Male";
+        //String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         System.out.println(username);
 
@@ -85,12 +86,11 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("username", username);
                 userDAO.addUser(new UserBean(0, username, password, email, gender));
                 userDAO.login(username, password);
-                Cookie loginCookie = new Cookie("username", username);
-                //setting cookie to expiry in 30 mins
-                loginCookie.setMaxAge(30 * 60);
-                response.addCookie(loginCookie);
-                response.sendRedirect("login.jsp");
-
+                url = "/register.jsp";
+                request.setAttribute("suc", "Added succesfully.");
+                RequestDispatcher rd = getServletContext()
+                        .getRequestDispatcher(url);
+                rd.forward(request, response);
             } else {
                 url = "/register.jsp";
                 RequestDispatcher rd = getServletContext()

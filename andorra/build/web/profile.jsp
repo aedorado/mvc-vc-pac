@@ -24,10 +24,10 @@ long totalFollowing = udi.totalFollowing(user_id);
 List<Integer> imgIdList = udi.listImagesPosted(user_id);
 %>
 <%!
-public String pageHTML(List<Integer> imgIdList) {
+public String pageHTML(List<Integer> imgIdList, HttpSession session) {
     String output = "";
     for (Integer i: imgIdList) {
-        output += imageIdToHTML(i.intValue());
+        output += imageIdToHTML(i.intValue(), session);
     }
     return output;
 }
@@ -40,9 +40,12 @@ public String pageHTML(List<Integer> imgIdList) {
         <title><% out.println(session.getAttribute("username")); %></title>
     </head>
     <body>
-        <% out.println(totalImagesPosted); %> Images Posted
-        <% out.println(totalFollowers); %> Followers
-        <% out.println(totalFollowing); %> Following
-        <% out.println(pageHTML(imgIdList)); %>
+        <ul id="user-details">
+            <li><% out.println(totalImagesPosted); %> Images Posted</li>
+            <li><% out.println(totalFollowers); %> Followers</li>
+            <li><% out.println(totalFollowing); %> Following</li>
+        </ul>
+        <br>
+        <% out.println(pageHTML(imgIdList, session)); %>
     </body>
 </html>

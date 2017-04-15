@@ -20,6 +20,29 @@ import java.util.ArrayList;
 public class UserDaoImp implements UserDao {
 
     @Override
+    public UserBean getUserByID(long userid) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "select * from User WHERE user_id = '" + userid + "'";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UserBean user = new UserBean();
+                user.setUsername(rs.getString("username"));
+                con.close();
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    @Override
     public boolean addUser(UserBean u) {
         Connection con = DBConnect.getConnecttion();
         String sql = "insert into User value(?,?,?,?,?)";
@@ -81,7 +104,7 @@ public class UserDaoImp implements UserDao {
         }
         return count;
     }
-    
+
     @Override
     public List listImagesPosted(long userId) {
         Connection con = DBConnect.getConnecttion();
@@ -104,7 +127,7 @@ public class UserDaoImp implements UserDao {
 
         return list;
     }
-    
+
     @Override
     public List listImagesPostedByFollowing(long userId) {
         Connection con = DBConnect.getConnecttion();
@@ -155,6 +178,25 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public String getUsernameFromId(long user_id) {
+        Connection con = DBConnect.getConnecttion();
+        String sql = "SELECT username FROM User WHERE user_id='" + user_id + "'";
+        PreparedStatement ps;
+        try {
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String username = rs.getString("username");
+                con.close();
+                return username;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    @Override
     public long getIdFromUsername(String username) {
         Connection con = DBConnect.getConnecttion();
         String sql = "SELECT user_id FROM User WHERE username='" + username + "'";
@@ -172,19 +214,22 @@ public class UserDaoImp implements UserDao {
         }
         return 0;
     }
+
     @Override
     public int totalFollowers(long userId) {
         int count = 0;
         Connection con = DBConnect.getConnecttion();
         String sql = "select count(*) from Followers where following_id=" + userId + "";
-	PreparedStatement ps;
+        PreparedStatement ps;
         ResultSet rs;
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()) count = rs.getInt(1);
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
             con.close();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
@@ -196,29 +241,31 @@ public class UserDaoImp implements UserDao {
         int count = 0;
         Connection con = DBConnect.getConnecttion();
         String sql = "select count(*) from Followers where follower_id=" + userId + "";
-	PreparedStatement ps;
+        PreparedStatement ps;
         ResultSet rs;
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()) count = rs.getInt(1);
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
             con.close();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
         return count;
     }
-    
+
     @Override
     public List listFollowersOf(long userId) {
         Connection con = DBConnect.getConnecttion();
         String sql = "select follower_id from Followers where following_id=" + userId + "";
-	PreparedStatement ps;
+        PreparedStatement ps;
         ResultSet rs;
         List<Integer> list;
         list = new ArrayList<Integer>();
-        
+
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -229,19 +276,19 @@ public class UserDaoImp implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return list;
     }
-    
+
     @Override
     public List listFollowingOf(long userId) {
         Connection con = DBConnect.getConnecttion();
         String sql = "select following_id from Followers where follower_id=" + userId + "";
-	PreparedStatement ps;
+        PreparedStatement ps;
         ResultSet rs;
         List<Integer> list;
         list = new ArrayList<Integer>();
-        
+
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -252,7 +299,7 @@ public class UserDaoImp implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return list;
     }
 }

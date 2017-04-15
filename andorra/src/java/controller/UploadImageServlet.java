@@ -34,7 +34,7 @@ import model.ImageBean;
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class UploadImageServlet extends HttpServlet {
-    
+
     ImageDao imageDao = new ImageDaoImp();
 
     /**
@@ -87,7 +87,7 @@ public class UploadImageServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String SAVE_DIR = "uploadedFiles";
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -100,11 +100,11 @@ public class UploadImageServlet extends HttpServlet {
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
         final String newFileName = imageDao.countTotalImages() + 1 + "." + getFileExtension(fileName);
-        
+
         OutputStream out = null;
         InputStream filecontent = null;
         final PrintWriter writer = response.getWriter();
-        
+
         try {
             out = new FileOutputStream(new File(request.getRealPath("/uploads/") + File.separator + newFileName));
             filecontent = filePart.getInputStream();
@@ -115,13 +115,17 @@ public class UploadImageServlet extends HttpServlet {
             }
             imageDao.addImage(new ImageBean((long) session.getAttribute("user_id"), 0, request.getParameter("caption"), null));
             suc += ("File uploaded succesfully");
-            response.sendRedirect("addImage.jsp");
+            request.setAttribute("suc", suc);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/addImage.jsp");
+            rd.forward(request, response);
+//            response.sendRedirect("/addImage.jsp");
         } catch (FileNotFoundException fne) {
             err += ("You either did not specify a file to upload or are "
                     + "trying to upload a file to a protected or nonexistent location.");
+            System.out.println(err);
             String url = "/addImage.jsp";
-            RequestDispatcher rd = getServletContext()
-                        .getRequestDispatcher(url);
+            request.setAttribute("err", err);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
             rd.forward(request, response);
 //            writer.println("<br/> ERROR: " + fne.getMessage());
 //            fne.printStackTrace(writer);
@@ -150,7 +154,7 @@ public class UploadImageServlet extends HttpServlet {
         }
         return null;
     }
-    
+
     private String getFileExtension(String fileName) {
         String extension = "";
         int i = fileName.lastIndexOf('.');

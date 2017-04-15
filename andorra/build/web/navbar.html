@@ -1,9 +1,23 @@
 <%
-String url = request.getRequestURL().toString();
-boolean indexPage = url.contains("index") ? true : false;
-boolean uploadPage = url.contains("addImage") ? true : false;
-boolean userPage = url.contains("profile") ? true : false;
+FollowersDaoImp fdi = new FollowersDaoImp();
+UserDaoImp udip = new UserDaoImp();
+long sessionUserId = ((Long)session.getAttribute("user_id")).longValue();
+String requestUrl = request.getRequestURL().toString();
+boolean indexPage = requestUrl.contains("index") ? true : false;
+boolean uploadPage = requestUrl.contains("addImage") ? true : false;
+boolean profilePage = requestUrl.contains("profile") ? true : false;
 
+%>
+
+<%
+long getParamUserId = 0;
+String username = "";
+boolean viewedIsFollowedByViewer = false;
+if (request.getParameter("user_id") != null) {
+getParamUserId = Long.parseLong(request.getParameter("user_id"));
+username = udip.getUsernameFromId(getParamUserId);
+viewedIsFollowedByViewer = fdi.isfollowing(sessionUserId, getParamUserId);
+}
 %>
 
 
@@ -45,18 +59,24 @@ boolean userPage = url.contains("profile") ? true : false;
                     <button type="submit" class="btn btn-default">Submit</button>
                   </form>-->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href='profile.jsp?user_id=<% out.print(session.getAttribute("user_id")); %>'><%out.print(session.getAttribute("username"));%></a></li>
+                <% if (profilePage && viewedIsFollowedByViewer) 
+                    out.print("<li><a href='FollowServlet?follow=" + getParamUserId + "'>Unfollow " + username + "</a></li>");
+                %> 
+                <% if (profilePage && !viewedIsFollowedByViewer) 
+                    out.print("<li><a href='FollowServlet?follow=" + getParamUserId + "'>Follow " + username + "</a></li>");
+                %> 
+                <li class='<% if (profilePage) out.print("active"); %>'><a href='profile.jsp?user_id=<% out.print(session.getAttribute("user_id")); %>'><%out.print(session.getAttribute("username"));%></a></li>
                 <li><a href="logout.jsp">Logout</a></li>
-<!--                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>-->
+                <!--                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
